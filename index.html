@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCSE Preguntas 2026</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #222;
+    color: white;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.player {
+    width: 350px;
+    background: #333;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+
+button {
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+li.active {
+    background: #4CAF50;
+}
+</style>
+</head>
+<body>
+
+<div class="player">
+    <h2 id="title">Loading...</h2>
+
+    <audio id="audio"></audio>
+
+    <div class="controls">
+        <button id="prev">⏮</button>
+        <button id="play">▶</button>
+        <button id="next">⏭</button>
+    </div>
+
+    <ul id="playlist"></ul>
+</div>
+
+<script>
+const tracks = [
+{ title: "Pregunta 1001.mp3", src: "audios/1001.mp3" },
+{ title: "Pregunta 1002.mp3", src: "audios/1002.mp3" },
+{ title: "Pregunta 1003.mp3", src: "audios/1003.mp3" },
+{ title: "Pregunta 1004.mp3", src: "audios/1004.mp3" },
+{ title: "Pregunta 1005.mp3", src: "audios/1005.mp3" },
+{ title: "Pregunta 1006.mp3", src: "audios/1006.mp3" },
+{ title: "Pregunta 1007.mp3", src: "audios/1007.mp3" },
+{ title: "Pregunta 1008.mp3", src: "audios/1008.mp3" },
+{ title: "Pregunta 1009.mp3", src: "audios/1009.mp3" },
+{ title: "Pregunta 1010.mp3", src: "audios/1010.mp3" },
+{ title: "Pregunta 1011.mp3", src: "audios/1011.mp3" },
+{ title: "Pregunta 1012.mp3", src: "audios/1012.mp3" },
+{ title: "Pregunta 1013.mp3", src: "audios/1013.mp3" },
+{ title: "Pregunta 1014.mp3", src: "audios/1014.mp3" },
+{ title: "Pregunta 1015.mp3", src: "audios/1015.mp3" },
+{ title: "Pregunta 1016.mp3", src: "audios/1016.mp3" },
+{ title: "Pregunta 1017.mp3", src: "audios/1017.mp3" },
+{ title: "Pregunta 1018.mp3", src: "audios/1018.mp3" },
+{ title: "Pregunta 1019.mp3", src: "audios/1019.mp3" },
+{ title: "Pregunta 1020.mp3", src: "audios/1020.mp3" },
+{ title: "Pregunta 1021.mp3", src: "audios/1021.mp3" },
+{ title: "Pregunta 1022.mp3", src: "audios/1022.mp3" },
+{ title: "Pregunta 1023.mp3", src: "audios/1023.mp3" },
+{ title: "Pregunta 1024.mp3", src: "audios/1024.mp3" },
+{ title: "Pregunta 1025.mp3", src: "audios/1025.mp3" },
+{ title: "Pregunta 1026.mp3", src: "audios/1026.mp3" },
+{ title: "Pregunta 1027.mp3", src: "audios/1027.mp3" },
+{ title: "Pregunta 1028.mp3", src: "audios/1028.mp3" },
+{ title: "Pregunta 1029.mp3", src: "audios/1029.mp3" },
+{ title: "Pregunta 1030.mp3", src: "audios/1030.mp3" },
+{ title: "Pregunta 1031.mp3", src: "audios/1031.mp3" },
+{ title: "Pregunta 1032.mp3", src: "audios/1032.mp3" },
+{ title: "Pregunta 1033.mp3", src: "audios/1033.mp3" },
+{ title: "Pregunta 1034.mp3", src: "audios/1034.mp3" },
+{ title: "Pregunta 1035.mp3", src: "audios/1035.mp3" },
+{ title: "Pregunta 1036.mp3", src: "audios/1036.mp3" },
+{ title: "Pregunta 1037.mp3", src: "audios/1037.mp3" },
+{ title: "Pregunta 1038.mp3", src: "audios/1038.mp3" },
+{ title: "Pregunta 1039.mp3", src: "audios/1039.mp3" },
+{ title: "Pregunta 1040.mp3", src: "audios/1040.mp3" },
+{ title: "Pregunta 1041.mp3", src: "audios/1041.mp3" },
+{ title: "Pregunta 1042.mp3", src: "audios/1042.mp3" },
+{ title: "Pregunta 1043.mp3", src: "audios/1043.mp3" },
+{ title: "Pregunta 1044.mp3", src: "audios/1044.mp3" },
+{ title: "Pregunta 1045.mp3", src: "audios/1045.mp3" },
+{ title: "Pregunta 1046.mp3", src: "audios/1046.mp3" },
+{ title: "Pregunta 1047.mp3", src: "audios/1047.mp3" },
+{ title: "Pregunta 1048.mp3", src: "audios/1048.mp3" },
+{ title: "Pregunta 1049.mp3", src: "audios/1049.mp3" },
+{ title: "Pregunta 1050.mp3", src: "audios/1050.mp3" },
+{ title: "Pregunta 1051.mp3", src: "audios/1051.mp3" },
+{ title: "Pregunta 1052.mp3", src: "audios/1052.mp3" },
+{ title: "Pregunta 1053.mp3", src: "audios/1053.mp3" },
+{ title: "Pregunta 1054.mp3", src: "audios/1054.mp3" },
+{ title: "Pregunta 1055.mp3", src: "audios/1055.mp3" },
+{ title: "Pregunta 1056.mp3", src: "audios/1056.mp3" },
+{ title: "Pregunta 1057.mp3", src: "audios/1057.mp3" },
+{ title: "Pregunta 1058.mp3", src: "audios/1058.mp3" },
+{ title: "Pregunta 1059.mp3", src: "audios/1059.mp3" },
+{ title: "Pregunta 1060.mp3", src: "audios/1060.mp3" },
+{ title: "Pregunta 1061.mp3", src: "audios/1061.mp3" },
+{ title: "Pregunta 1062.mp3", src: "audios/1062.mp3" },
+{ title: "Pregunta 1063.mp3", src: "audios/1063.mp3" },
+{ title: "Pregunta 1064.mp3", src: "audios/1064.mp3" },
+{ title: "Pregunta 1065.mp3", src: "audios/1065.mp3" },
+{ title: "Pregunta 1066.mp3", src: "audios/1066.mp3" },
+{ title: "Pregunta 1067.mp3", src: "audios/1067.mp3" },
+{ title: "Pregunta 1068.mp3", src: "audios/1068.mp3" },
+{ title: "Pregunta 1069.mp3", src: "audios/1069.mp3" },
+{ title: "Pregunta 1070.mp3", src: "audios/1070.mp3" },
+{ title: "Pregunta 1071.mp3", src: "audios/1071.mp3" },
+{ title: "Pregunta 1072.mp3", src: "audios/1072.mp3" },
+{ title: "Pregunta 1073.mp3", src: "audios/1073.mp3" },
+{ title: "Pregunta 1074.mp3", src: "audios/1074.mp3" },
+{ title: "Pregunta 1075.mp3", src: "audios/1075.mp3" },
+{ title: "Pregunta 1076.mp3", src: "audios/1076.mp3" },
+{ title: "Pregunta 1077.mp3", src: "audios/1077.mp3" },
+{ title: "Pregunta 1078.mp3", src: "audios/1078.mp3" },
+{ title: "Pregunta 1079.mp3", src: "audios/1079.mp3" },
+{ title: "Pregunta 1080.mp3", src: "audios/1080.mp3" },
+{ title: "Pregunta 1081.mp3", src: "audios/1081.mp3" },
+{ title: "Pregunta 1082.mp3", src: "audios/1082.mp3" },
+{ title: "Pregunta 1083.mp3", src: "audios/1083.mp3" },
+{ title: "Pregunta 1084.mp3", src: "audios/1084.mp3" },
+{ title: "Pregunta 1085.mp3", src: "audios/1085.mp3" },
+{ title: "Pregunta 1086.mp3", src: "audios/1086.mp3" },
+{ title: "Pregunta 1087.mp3", src: "audios/1087.mp3" },
+{ title: "Pregunta 1088.mp3", src: "audios/1088.mp3" },
+{ title: "Pregunta 1089.mp3", src: "audios/1089.mp3" },
+{ title: "Pregunta 1090.mp3", src: "audios/1090.mp3" },
+{ title: "Pregunta 1091.mp3", src: "audios/1091.mp3" },
+{ title: "Pregunta 1092.mp3", src: "audios/1092.mp3" },
+{ title: "Pregunta 1093.mp3", src: "audios/1093.mp3" },
+{ title: "Pregunta 1094.mp3", src: "audios/1094.mp3" },
+{ title: "Pregunta 1095.mp3", src: "audios/1095.mp3" },
+{ title: "Pregunta 1096.mp3", src: "audios/1096.mp3" },
+{ title: "Pregunta 1097.mp3", src: "audios/1097.mp3" },
+{ title: "Pregunta 1098.mp3", src: "audios/1098.mp3" },
+{ title: "Pregunta 1099.mp3", src: "audios/1099.mp3" },
+{ title: "Pregunta 1100.mp3", src: "audios/1100.mp3" },
+{ title: "Pregunta 1101.mp3", src: "audios/1101.mp3" },
+{ title: "Pregunta 1102.mp3", src: "audios/1102.mp3" },
+{ title: "Pregunta 1103.mp3", src: "audios/1103.mp3" },
+{ title: "Pregunta 1104.mp3", src: "audios/1104.mp3" },
+{ title: "Pregunta 1105.mp3", src: "audios/1105.mp3" },
+{ title: "Pregunta 1106.mp3", src: "audios/1106.mp3" },
+{ title: "Pregunta 1107.mp3", src: "audios/1107.mp3" },
+{ title: "Pregunta 1108.mp3", src: "audios/1108.mp3" },
+{ title: "Pregunta 1109.mp3", src: "audios/1109.mp3" },
+{ title: "Pregunta 1110.mp3", src: "audios/1110.mp3" },
+{ title: "Pregunta 1111.mp3", src: "audios/1111.mp3" },
+{ title: "Pregunta 1112.mp3", src: "audios/1112.mp3" },
+{ title: "Pregunta 1113.mp3", src: "audios/1113.mp3" },
+{ title: "Pregunta 1114.mp3", src: "audios/1114.mp3" },
+{ title: "Pregunta 1115.mp3", src: "audios/1115.mp3" },
+{ title: "Pregunta 1116.mp3", src: "audios/1116.mp3" },
+{ title: "Pregunta 1117.mp3", src: "audios/1117.mp3" },
+{ title: "Pregunta 1118.mp3", src: "audios/1118.mp3" },
+{ title: "Pregunta 1119.mp3", src: "audios/1119.mp3" },
+{ title: "Pregunta 1120.mp3", src: "audios/1120.mp3" },
+{ title: "Pregunta 2001.mp3", src: "audios/2001.mp3" },
+{ title: "Pregunta 2002.mp3", src: "audios/2002.mp3" },
+{ title: "Pregunta 2003.mp3", src: "audios/2003.mp3" },
+{ title: "Pregunta 2004.mp3", src: "audios/2004.mp3" },
+{ title: "Pregunta 2005.mp3", src: "audios/2005.mp3" },
+{ title: "Pregunta 2006.mp3", src: "audios/2006.mp3" },
+{ title: "Pregunta 2007.mp3", src: "audios/2007.mp3" },
+{ title: "Pregunta 2008.mp3", src: "audios/2008.mp3" },
+{ title: "Pregunta 2009.mp3", src: "audios/2009.mp3" },
+{ title: "Pregunta 2010.mp3", src: "audios/2010.mp3" },
+{ title: "Pregunta 2011.mp3", src: "audios/2011.mp3" },
+{ title: "Pregunta 2012.mp3", src: "audios/2012.mp3" },
+{ title: "Pregunta 2013.mp3", src: "audios/2013.mp3" },
+{ title: "Pregunta 2014.mp3", src: "audios/2014.mp3" },
+{ title: "Pregunta 2015.mp3", src: "audios/2015.mp3" },
+{ title: "Pregunta 2016.mp3", src: "audios/2016.mp3" },
+{ title: "Pregunta 2017.mp3", src: "audios/2017.mp3" },
+{ title: "Pregunta 2018.mp3", src: "audios/2018.mp3" },
+{ title: "Pregunta 2019.mp3", src: "audios/2019.mp3" },
+{ title: "Pregunta 2020.mp3", src: "audios/2020.mp3" },
+{ title: "Pregunta 2021.mp3", src: "audios/2021.mp3" },
+{ title: "Pregunta 2022.mp3", src: "audios/2022.mp3" },
+{ title: "Pregunta 2023.mp3", src: "audios/2023.mp3" },
+{ title: "Pregunta 2024.mp3", src: "audios/2024.mp3" },
+{ title: "Pregunta 2025.mp3", src: "audios/2025.mp3" },
+{ title: "Pregunta 2026.mp3", src: "audios/2026.mp3" },
+{ title: "Pregunta 2027.mp3", src: "audios/2027.mp3" },
+{ title: "Pregunta 2028.mp3", src: "audios/2028.mp3" },
+{ title: "Pregunta 2029.mp3", src: "audios/2029.mp3" },
+{ title: "Pregunta 2030.mp3", src: "audios/2030.mp3" },
+{ title: "Pregunta 2031.mp3", src: "audios/2031.mp3" },
+{ title: "Pregunta 2032.mp3", src: "audios/2032.mp3" },
+{ title: "Pregunta 2033.mp3", src: "audios/2033.mp3" },
+{ title: "Pregunta 2034.mp3", src: "audios/2034.mp3" },
+{ title: "Pregunta 2035.mp3", src: "audios/2035.mp3" },
+{ title: "Pregunta 2036.mp3", src: "audios/2036.mp3" },
+{ title: "Pregunta 3001.mp3", src: "audios/3001.mp3" },
+{ title: "Pregunta 3002.mp3", src: "audios/3002.mp3" },
+{ title: "Pregunta 3003.mp3", src: "audios/3003.mp3" },
+{ title: "Pregunta 3004.mp3", src: "audios/3004.mp3" },
+{ title: "Pregunta 3005.mp3", src: "audios/3005.mp3" },
+{ title: "Pregunta 3006.mp3", src: "audios/3006.mp3" },
+{ title: "Pregunta 3007.mp3", src: "audios/3007.mp3" },
+{ title: "Pregunta 3008.mp3", src: "audios/3008.mp3" },
+{ title: "Pregunta 3009.mp3", src: "audios/3009.mp3" },
+{ title: "Pregunta 3010.mp3", src: "audios/3010.mp3" },
+{ title: "Pregunta 3011.mp3", src: "audios/3011.mp3" },
+{ title: "Pregunta 3012.mp3", src: "audios/3012.mp3" },
+{ title: "Pregunta 3013.mp3", src: "audios/3013.mp3" },
+{ title: "Pregunta 3014.mp3", src: "audios/3014.mp3" },
+{ title: "Pregunta 3015.mp3", src: "audios/3015.mp3" },
+{ title: "Pregunta 3016.mp3", src: "audios/3016.mp3" },
+{ title: "Pregunta 3017.mp3", src: "audios/3017.mp3" },
+{ title: "Pregunta 3018.mp3", src: "audios/3018.mp3" },
+{ title: "Pregunta 3019.mp3", src: "audios/3019.mp3" },
+{ title: "Pregunta 3020.mp3", src: "audios/3020.mp3" },
+{ title: "Pregunta 3021.mp3", src: "audios/3021.mp3" },
+{ title: "Pregunta 3022.mp3", src: "audios/3022.mp3" },
+{ title: "Pregunta 3023.mp3", src: "audios/3023.mp3" },
+{ title: "Pregunta 3024.mp3", src: "audios/3024.mp3" },
+{ title: "Pregunta 4001.mp3", src: "audios/4001.mp3" },
+{ title: "Pregunta 4002.mp3", src: "audios/4002.mp3" },
+{ title: "Pregunta 4003.mp3", src: "audios/4003.mp3" },
+{ title: "Pregunta 4004.mp3", src: "audios/4004.mp3" },
+{ title: "Pregunta 4005.mp3", src: "audios/4005.mp3" },
+{ title: "Pregunta 4006.mp3", src: "audios/4006.mp3" },
+{ title: "Pregunta 4007.mp3", src: "audios/4007.mp3" },
+{ title: "Pregunta 4008.mp3", src: "audios/4008.mp3" },
+{ title: "Pregunta 4009.mp3", src: "audios/4009.mp3" },
+{ title: "Pregunta 4010.mp3", src: "audios/4010.mp3" },
+{ title: "Pregunta 4011.mp3", src: "audios/4011.mp3" },
+{ title: "Pregunta 4012.mp3", src: "audios/4012.mp3" },
+{ title: "Pregunta 4013.mp3", src: "audios/4013.mp3" },
+{ title: "Pregunta 4014.mp3", src: "audios/4014.mp3" },
+{ title: "Pregunta 4015.mp3", src: "audios/4015.mp3" },
+{ title: "Pregunta 4016.mp3", src: "audios/4016.mp3" },
+{ title: "Pregunta 4017.mp3", src: "audios/4017.mp3" },
+{ title: "Pregunta 4018.mp3", src: "audios/4018.mp3" },
+{ title: "Pregunta 4019.mp3", src: "audios/4019.mp3" },
+{ title: "Pregunta 4020.mp3", src: "audios/4020.mp3" },
+{ title: "Pregunta 4021.mp3", src: "audios/4021.mp3" },
+{ title: "Pregunta 4022.mp3", src: "audios/4022.mp3" },
+{ title: "Pregunta 4023.mp3", src: "audios/4023.mp3" },
+{ title: "Pregunta 4024.mp3", src: "audios/4024.mp3" },
+{ title: "Pregunta 4025.mp3", src: "audios/4025.mp3" },
+{ title: "Pregunta 4026.mp3", src: "audios/4026.mp3" },
+{ title: "Pregunta 4027.mp3", src: "audios/4027.mp3" },
+{ title: "Pregunta 4028.mp3", src: "audios/4028.mp3" },
+{ title: "Pregunta 4029.mp3", src: "audios/4029.mp3" },
+{ title: "Pregunta 4030.mp3", src: "audios/4030.mp3" },
+{ title: "Pregunta 4031.mp3", src: "audios/4031.mp3" },
+{ title: "Pregunta 4032.mp3", src: "audios/4032.mp3" },
+{ title: "Pregunta 4033.mp3", src: "audios/4033.mp3" },
+{ title: "Pregunta 4034.mp3", src: "audios/4034.mp3" },
+{ title: "Pregunta 4035.mp3", src: "audios/4035.mp3" },
+{ title: "Pregunta 4036.mp3", src: "audios/4036.mp3" },
+{ title: "Pregunta 5001.mp3", src: "audios/5001.mp3" },
+{ title: "Pregunta 5002.mp3", src: "audios/5002.mp3" },
+{ title: "Pregunta 5003.mp3", src: "audios/5003.mp3" },
+{ title: "Pregunta 5004.mp3", src: "audios/5004.mp3" },
+{ title: "Pregunta 5005.mp3", src: "audios/5005.mp3" },
+{ title: "Pregunta 5006.mp3", src: "audios/5006.mp3" },
+{ title: "Pregunta 5007.mp3", src: "audios/5007.mp3" },
+{ title: "Pregunta 5008.mp3", src: "audios/5008.mp3" },
+{ title: "Pregunta 5009.mp3", src: "audios/5009.mp3" },
+{ title: "Pregunta 5010.mp3", src: "audios/5010.mp3" },
+{ title: "Pregunta 5011.mp3", src: "audios/5011.mp3" },
+{ title: "Pregunta 5012.mp3", src: "audios/5012.mp3" },
+{ title: "Pregunta 5013.mp3", src: "audios/5013.mp3" },
+{ title: "Pregunta 5014.mp3", src: "audios/5014.mp3" },
+{ title: "Pregunta 5015.mp3", src: "audios/5015.mp3" },
+{ title: "Pregunta 5016.mp3", src: "audios/5016.mp3" },
+{ title: "Pregunta 5017.mp3", src: "audios/5017.mp3" },
+{ title: "Pregunta 5018.mp3", src: "audios/5018.mp3" },
+{ title: "Pregunta 5019.mp3", src: "audios/5019.mp3" },
+{ title: "Pregunta 5020.mp3", src: "audios/5020.mp3" },
+{ title: "Pregunta 5021.mp3", src: "audios/5021.mp3" },
+{ title: "Pregunta 5022.mp3", src: "audios/5022.mp3" },
+{ title: "Pregunta 5023.mp3", src: "audios/5023.mp3" },
+{ title: "Pregunta 5024.mp3", src: "audios/5024.mp3" },
+{ title: "Pregunta 5025.mp3", src: "audios/5025.mp3" },
+{ title: "Pregunta 5026.mp3", src: "audios/5026.mp3" },
+{ title: "Pregunta 5027.mp3", src: "audios/5027.mp3" },
+{ title: "Pregunta 5028.mp3", src: "audios/5028.mp3" },
+{ title: "Pregunta 5029.mp3", src: "audios/5029.mp3" },
+{ title: "Pregunta 5030.mp3", src: "audios/5030.mp3" },
+{ title: "Pregunta 5031.mp3", src: "audios/5031.mp3" },
+{ title: "Pregunta 5032.mp3", src: "audios/5032.mp3" },
+{ title: "Pregunta 5033.mp3", src: "audios/5033.mp3" },
+{ title: "Pregunta 5034.mp3", src: "audios/5034.mp3" },
+{ title: "Pregunta 5035.mp3", src: "audios/5035.mp3" },
+{ title: "Pregunta 5036.mp3", src: "audios/5036.mp3" },
+{ title: "Pregunta 5037.mp3", src: "audios/5037.mp3" },
+{ title: "Pregunta 5038.mp3", src: "audios/5038.mp3" },
+{ title: "Pregunta 5039.mp3", src: "audios/5039.mp3" },
+{ title: "Pregunta 5040.mp3", src: "audios/5040.mp3" },
+{ title: "Pregunta 5041.mp3", src: "audios/5041.mp3" },
+{ title: "Pregunta 5042.mp3", src: "audios/5042.mp3" },
+{ title: "Pregunta 5043.mp3", src: "audios/5043.mp3" },
+{ title: "Pregunta 5044.mp3", src: "audios/5044.mp3" },
+{ title: "Pregunta 5045.mp3", src: "audios/5045.mp3" },
+{ title: "Pregunta 5046.mp3", src: "audios/5046.mp3" },
+{ title: "Pregunta 5047.mp3", src: "audios/5047.mp3" },
+{ title: "Pregunta 5048.mp3", src: "audios/5048.mp3" },
+{ title: "Pregunta 5049.mp3", src: "audios/5049.mp3" },
+{ title: "Pregunta 5050.mp3", src: "audios/5050.mp3" },
+{ title: "Pregunta 5051.mp3", src: "audios/5051.mp3" },
+{ title: "Pregunta 5052.mp3", src: "audios/5052.mp3" },
+{ title: "Pregunta 5053.mp3", src: "audios/5053.mp3" },
+{ title: "Pregunta 5054.mp3", src: "audios/5054.mp3" },
+{ title: "Pregunta 5055.mp3", src: "audios/5055.mp3" },
+{ title: "Pregunta 5056.mp3", src: "audios/5056.mp3" },
+{ title: "Pregunta 5057.mp3", src: "audios/5057.mp3" },
+{ title: "Pregunta 5058.mp3", src: "audios/5058.mp3" },
+{ title: "Pregunta 5059.mp3", src: "audios/5059.mp3" },
+{ title: "Pregunta 5060.mp3", src: "audios/5060.mp3" },
+{ title: "Pregunta 5061.mp3", src: "audios/5061.mp3" },
+{ title: "Pregunta 5062.mp3", src: "audios/5062.mp3" },
+{ title: "Pregunta 5063.mp3", src: "audios/5063.mp3" },
+{ title: "Pregunta 5064.mp3", src: "audios/5064.mp3" },
+{ title: "Pregunta 5065.mp3", src: "audios/5065.mp3" },
+{ title: "Pregunta 5066.mp3", src: "audios/5066.mp3" },
+{ title: "Pregunta 5067.mp3", src: "audios/5067.mp3" },
+{ title: "Pregunta 5068.mp3", src: "audios/5068.mp3" },
+{ title: "Pregunta 5069.mp3", src: "audios/5069.mp3" },
+{ title: "Pregunta 5070.mp3", src: "audios/5070.mp3" },
+{ title: "Pregunta 5071.mp3", src: "audios/5071.mp3" },
+{ title: "Pregunta 5072.mp3", src: "audios/5072.mp3" },
+{ title: "Pregunta 5073.mp3", src: "audios/5073.mp3" },
+{ title: "Pregunta 5074.mp3", src: "audios/5074.mp3" },
+{ title: "Pregunta 5075.mp3", src: "audios/5075.mp3" },
+{ title: "Pregunta 5076.mp3", src: "audios/5076.mp3" },
+{ title: "Pregunta 5077.mp3", src: "audios/5077.mp3" },
+{ title: "Pregunta 5078.mp3", src: "audios/5078.mp3" },
+{ title: "Pregunta 5079.mp3", src: "audios/5079.mp3" },
+{ title: "Pregunta 5080.mp3", src: "audios/5080.mp3" },
+{ title: "Pregunta 5081.mp3", src: "audios/5081.mp3" },
+{ title: "Pregunta 5082.mp3", src: "audios/5082.mp3" },
+{ title: "Pregunta 5083.mp3", src: "audios/5083.mp3" },
+{ title: "Pregunta 5084.mp3", src: "audios/5084.mp3" },
+];
+
+const audio = document.getElementById("audio");
+const title = document.getElementById("title");
+const playBtn = document.getElementById("play");
+const nextBtn = document.getElementById("next");
+const prevBtn = document.getElementById("prev");
+const playlist = document.getElementById("playlist");
+
+let current = 0;
+
+function loadTrack(index) {
+    current = index;
+    audio.src = tracks[current].src;
+    title.textContent = tracks[current].title;
+
+    [...playlist.children].forEach(li => li.classList.remove("active"));
+    playlist.children[current].classList.add("active");
+}
+
+tracks.forEach((track, index) => {
+    const li = document.createElement("li");
+    li.textContent = track.title;
+
+    li.onclick = () => {
+        loadTrack(index);
+        audio.play();
+        playBtn.textContent = "⏸";
+    };
+
+    playlist.appendChild(li);
+});
+
+playBtn.onclick = () => {
+    if (audio.paused) {
+        audio.play();
+        playBtn.textContent = "⏸";
+    } else {
+        audio.pause();
+        playBtn.textContent = "▶";
+    }
+};
+
+nextBtn.onclick = () => {
+    current = (current + 1) % tracks.length;
+    loadTrack(current);
+    audio.play();
+    playBtn.textContent = "⏸";
+};
+
+prevBtn.onclick = () => {
+    current = (current - 1 + tracks.length) % tracks.length;
+    loadTrack(current);
+    audio.play();
+    playBtn.textContent = "⏸";
+};
+
+// Automatically play next track.
+// After the last song, it loops back to the first.
+audio.addEventListener("ended", () => {
+    current = (current + 1) % tracks.length;
+    loadTrack(current);
+    audio.play();
+});
+
+loadTrack(0);
+</script>
+
+</body>
+</html>
